@@ -3086,8 +3086,21 @@
   }
 
   // ---------- sizing ----------
+  // Phones held upright get their own layout: the board (cropped at the panel edge, as on desktop) on top and the
+  // shop underneath, scaled up to fill the rest of the screen. Desktop and landscape keep the 1440x900 stage.
   function resize() {
-    const s = Math.min(window.innerWidth / W, window.innerHeight / H);
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const portrait = vh > vw * 1.05;
+    document.body.classList.toggle('portrait', portrait);
+    let sw = W, sh = H;
+    if (portrait) {
+      sw = PANEL_X;
+      sh = Math.max(Math.round(PANEL_X * 1.45), Math.round(sw * vh / vw));
+      stage.style.setProperty('--pz', Math.max(1.3, Math.min(2.4, (sh - H) / 660)).toFixed(3));
+    }
+    stage.style.width = sw + 'px';
+    stage.style.height = sh + 'px';
+    const s = Math.min(vw / sw, vh / sh);
     stage.style.transform = `translate(-50%, -50%) scale(${s})`;
   }
 

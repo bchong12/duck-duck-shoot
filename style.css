@@ -113,6 +113,12 @@ canvas#game {
     inset 0 0 70px rgba(0, 0, 0, .32),
     inset 8px 0 18px rgba(255, 230, 180, .06);
 }
+#panelInner {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
 #panel::before {
   content: '';
   position: absolute;
@@ -1073,3 +1079,47 @@ canvas#game {
   white-space: nowrap;
 }
 #warning-banner.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ============ phones held upright ============ */
+html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+body.portrait #stage { border-radius: 0; }
+body.portrait #panel {
+  top: 900px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  padding: 0;
+  border-left: 0;
+  border-top: 4px solid #cc9a60;
+  border-radius: 18px 18px 0 0;
+  box-shadow: 0 -12px 30px rgba(20, 10, 4, .5), inset 0 0 0 3px rgba(255, 218, 165, .14), inset 0 0 70px rgba(0, 0, 0, .32);
+}
+body.portrait #panelInner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% / var(--pz, 2));
+  height: calc(100% / var(--pz, 2));
+  transform: scale(var(--pz, 2));
+  transform-origin: 0 0;
+  padding: 13px 13px 12px;
+}
+body.portrait .duck-grid { grid-template-columns: repeat(3, 1fr); }
+body.portrait .upgrade-box { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+body.portrait .title-decor { object-fit: cover; }
+body.portrait .title-content,
+body.portrait .map-content {
+  left: 25%;
+  right: auto;
+  width: 50%;
+  height: 50%;
+  transform: scale(2);
+  transform-origin: 50% 0;
+}
+body.portrait .title-content { justify-content: center; padding-top: 0; }
+body.portrait .title-logo { width: 92%; max-width: 560px; }
+body.portrait .start-diffs { flex-wrap: wrap; align-items: stretch; max-width: 470px; }
+body.portrait .start-diff { width: 225px; }
+body.portrait .map-grid { grid-template-columns: repeat(2, 246px); }
+body.portrait .end-card { min-width: 0; width: 520px; transform: scale(2); }
